@@ -1,0 +1,31 @@
+{
+  "name": "markdown-it-container-figure",
+  "version": "1.0.0",
+  "description": "A markdown-it plugin to wrap images and captions in <figure> and <figcaption> tags.",
+  "keywords": [
+    "markdown-it",
+    "markdown-it-plugin"
+  ],
+  "license": "MIT",
+  "author": "sugiwe",
+  "homepage": "https://github.com/sugiwe/markdown-it-container-figure#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sugiwe/markdown-it-container-figure.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sugiwe/markdown-it-container-figure/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "markdown-it": "^12.3.2",
+    "markdown-it-container": "^3.0.0"
+  },
+  "files": [
+    "index.js"
+  ],
+  "type": "module"
+}
