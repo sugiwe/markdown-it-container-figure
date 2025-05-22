@@ -58,7 +58,7 @@ Output:
 
 ```markdown
 :::figure
-`<p><img src="image.jpg"></p>`
+<p><img src="image.jpg"></p>
 This is a caption for the image.
 :::
 ```
