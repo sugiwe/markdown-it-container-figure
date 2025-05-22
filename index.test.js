@@ -19,6 +19,38 @@ Caption text
 
     expect(actualOutput).toBe(expectedOutput);
   });
+
+  it('wraps <p> enclosed <img> and caption in <figure> and <figcaption>', () => {
+    const input = `
+:::figure
+<p><img src="image.jpg"></p>
+Caption text
+:::
+`.trim();
+
+    const raw = `<p><img src="image.jpg"></p><figcaption>Caption text</figcaption>`;
+    const expectedOutput = `<figure>${escapeHTML(raw)}</figure>`;
+
+    const actualOutput = md.render(input).trim();
+
+    expect(actualOutput).toBe(expectedOutput);
+  });
+
+  it('wraps standalone <img> and caption in <figure> and <figcaption>', () => {
+    const input = `
+:::figure
+<img src="image.jpg">
+Caption text
+:::
+`.trim();
+
+    const raw = `<img src="image.jpg"><figcaption>Caption text</figcaption>`;
+    const expectedOutput = `<figure>${escapeHTML(raw)}</figure>`;
+
+    const actualOutput = md.render(input).trim();
+
+    expect(actualOutput).toBe(expectedOutput);
+  });
 });
 
 function escapeHTML(string) {
