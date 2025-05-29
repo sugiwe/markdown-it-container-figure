@@ -1,5 +1,7 @@
 import MarkdownItContainer from 'markdown-it-container'
 
+const FIGURE_CONTENTS_REGEX = /^(<a [^>]+>\s*<img [^>]+>\s*<\/a>|<p><img [^>]+><\/p>|<img [^>]+>)([\s\S]*)$/
+
 export default (md) => {
   md.use(MarkdownItContainer, 'figure', {
     render: (tokens, idx) => {
@@ -24,9 +26,7 @@ const buildFigureContent = (md) => {
         isInContainerFigure = true
       }
       if (isInContainerFigure && (token.type === 'inline' || token.type === 'html_block')) {
-        const match = token.content.match(
-          /^(<a [^>]+>\s*<img [^>]+>\s*<\/a>|<p><img [^>]+><\/p>|<img [^>]+>)([\s\S]*)$/
-        )
+        const match = FIGURE_CONTENTS_REGEX.exec(token.content)
         if (!match) return
 
         const imageContents = match[1]
