@@ -1,5 +1,7 @@
 import MarkdownItContainer from 'markdown-it-container'
 
+const FIGURE_CONTENTS_REGEX = /^(<a [^>]+>\s*<img [^>]+>\s*<\/a>|<p><img [^>]+><\/p>|<img [^>]+>)([\s\S]*)$/
+
 export default (md) => {
   md.use(MarkdownItContainer, 'figure', {
     render: (tokens, idx) => {
@@ -16,22 +18,23 @@ export default (md) => {
 
 // Extracts the caption from the content of a figure block, wraps it in a <figcaption> tag, and structures the final figure content.
 const buildFigureContent = (md) => {
-  md.core.ruler.after('block', 'extracting_caption_from_figure', (state) => {
+  md.core.ruler.after('block', 'container-figure', (state) => {
     let isInContainerFigure = false
 
     state.tokens.forEach((token, i) => {
       if (token.type === 'container_figure_open') {
         isInContainerFigure = true
       }
-      if (isInContainerFigure && (token.type === 'inline' || token.type === 'html_block')) {
-        const match = token.content.match(
-          /^(<a [^>]+>\s*<img [^>]+>\s*<\/a>|<p><img [^>]+><\/p>|<img [^>]+>)([\s\S]*)$/
-        )
+
+      if (!isInContainerFigure) return
+
+      if (token.type === 'inline' || token.type === 'html_block') {
+        const match = FIGURE_CONTENTS_REGEX.exec(token.content)
         if (!match) return
 
-        const imageTag = match[1]
+        const imageContents = match[1]
         const caption = match[2].trim()
-        token.content = `${imageTag}<figcaption>${caption}</figcaption>`
+        token.content = `${imageContents}<figcaption>${caption}</figcaption>`
 
         // Prevents markdown-it from rendering <p> tags inside <figure> blocks.
         const pOpen = state.tokens[i - 1]
