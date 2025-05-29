@@ -29,9 +29,9 @@ const buildFigureContent = (md) => {
         )
         if (!match) return
 
-        const imageTag = match[1]
+        const imageContents = match[1]
         const caption = match[2].trim()
-        token.content = `${imageTag}<figcaption>${caption}</figcaption>`
+        token.content = `${imageContents}<figcaption>${caption}</figcaption>`
 
         // Prevents markdown-it from rendering <p> tags inside <figure> blocks.
         const pOpen = state.tokens[i - 1]
