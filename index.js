@@ -25,7 +25,10 @@ const buildFigureContent = (md) => {
       if (token.type === 'container_figure_open') {
         isInContainerFigure = true
       }
-      if (isInContainerFigure && (token.type === 'inline' || token.type === 'html_block')) {
+
+      if (!isInContainerFigure) return
+
+      if (token.type === 'inline' || token.type === 'html_block') {
         const match = FIGURE_CONTENTS_REGEX.exec(token.content)
         if (!match) return
 
