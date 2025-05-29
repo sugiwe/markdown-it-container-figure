@@ -18,7 +18,7 @@ export default (md) => {
 
 // Extracts the caption from the content of a figure block, wraps it in a <figcaption> tag, and structures the final figure content.
 const buildFigureContent = (md) => {
-  md.core.ruler.after('block', 'extracting_caption_from_figure', (state) => {
+  md.core.ruler.after('block', 'container-figure', (state) => {
     let isInContainerFigure = false
 
     state.tokens.forEach((token, i) => {
