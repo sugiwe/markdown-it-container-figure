@@ -25,7 +25,6 @@ const buildFigureContent = (md) => {
       if (token.type === 'container_figure_open') {
         isInContainerFigure = true
       }
-
       if (!isInContainerFigure) return
 
       if (token.type === 'inline' || token.type === 'html_block') {
@@ -33,8 +32,8 @@ const buildFigureContent = (md) => {
         if (!match) return
 
         const imageContents = match[1]
-        const caption = match[2].trim()
-        token.content = `${imageContents}<figcaption>${caption}</figcaption>`
+        const imageCaption = match[2].trim()
+        token.content = `${imageContents}<figcaption>${imageCaption}</figcaption>`
 
         // Prevents markdown-it from rendering <p> tags inside <figure> blocks.
         const pOpen = state.tokens[i - 1]
